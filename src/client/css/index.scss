@@ -1,0 +1,28 @@
+@use './reset.css';
+@use './chrome.scss';
+@use './numberBuilder.scss';
+
+* {
+	box-sizing: border-box;
+}
+html,
+body,
+app-body,
+#App {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	font-family: sans-serif;
+}
+#App {
+	display: flex;
+	flex-direction: column;
+}
+#App > div {
+	flex-grow: 2;
+	display: flex;
+	border-top: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
+}
+
+

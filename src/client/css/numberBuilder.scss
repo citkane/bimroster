@@ -1,0 +1,61 @@
+$selector-height: 2rem;
+
+number-builder {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+    fields-selection {
+        display: flex;
+        width: 100%;
+    }
+    fields-selection > * {
+        flex-grow: 1;
+        flex-basis: 10%;
+        position: relative;
+    }
+    field-selector select {
+        width: 100%;
+        height: $selector-height;
+    }
+    number-field-selector {
+        display:flex;
+        flex-direction: column;
+        .display {
+            order:1;
+            height: $selector-height;
+            display: flex;
+            align-items: center;
+        }
+        field-selector {order:2}
+        field-selector.disabled {
+            visibility:hidden;
+        }
+
+    }
+}
+
+fields-display {
+	display: flex;
+	padding: 2rem;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	width: 100%;
+	pointer-events: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+    field-display.disabled {
+        opacity: 0.25;
+    }
+    field-display:after {
+        content: '-';
+    }
+    field-display:last-child:after {
+        content: '';
+    }
+
+}
+

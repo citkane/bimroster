@@ -1,0 +1,176 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id          Int           @id @default(autoincrement())
+  shortCode   String        @unique
+  name        String
+  projects    Project[]
+  people      Person[]
+  volumes     Volume[]
+  NumberRange NumberRange[]
+}
+
+model Person {
+  id        Int      @id @default(autoincrement())
+  nameFirst String
+  nameLast  String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?     @unique
+  Company   Company? @relation(fields: [companyId], references: [id])
+  companyId Int?
+}
+
+model User {
+  id            Int     @id @default(autoincrement())
+  Person        Person?
+  role          Role    @relation(fields: [roleShortCode], references: [shortCode])
+  roleShortCode String
+  username      String
+  email         String  @unique
+}
+
+model Client {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Project {
+  id             Int           @id @default(autoincrement())
+  jobNo          Int?
+  jobName        String?
+  jobCode        String        @unique
+  companies      Company[]
+  volumes        VolumeSchema  @relation(fields: [volumeSchemaId], references: [id])
+  volumeSchemaId Int
+  numbers        Number[]
+  NumberRanges   NumberSchema? @relation(fields: [NumberSchemaId], references: [id])
+  NumberSchemaId Int?
+  levels         Level[]
+  types          Type[]
+  roles          Role[]
+  roleShortCode  String?
+}
+
+model Volume {
+  id          Int            @id @default(autoincrement())
+  shortCode   String
+  description String         @unique
+  company     Company        @relation(fields: [companyId], references: [id])
+  companyId   Int
+  volumes     VolumeSchema[]
+
+  @@unique([id, shortCode])
+}
+
+model VolumeSchema {
+  id       Int       @id @default(autoincrement())
+  name     String
+  volume   Volume[]
+  projects Project[]
+}
+
+model Level {
+  shortCode   String    @id @unique
+  description String?
+  projects    Project[]
+}
+
+model Type {
+  shortCode   String      @id @unique
+  description String?
+  typeSchema  TypeSchema?
+  tracked     Boolean?
+  projects    Project[]
+}
+
+model SubTypes {
+  shortCode    String     @id @unique
+  description  String?
+  typeSchema   TypeSchema @relation(fields: [typeSchemaId], references: [id])
+  typeSchemaId Int
+}
+
+model TypeSchema {
+  id            Int        @id @default(autoincrement())
+  description   String
+  type          Type       @relation(fields: [typeShortCode], references: [shortCode])
+  typeShortCode String     @unique
+  SubTypes      SubTypes[]
+}
+
+model Role {
+  shortCode   String    @id @unique
+  description String?
+  users       User[]
+  projects    Project[]
+}
+
+model Number {
+  id         Int        @id @default(autoincrement())
+  project    Project    @relation(fields: [projectId], references: [id])
+  projectId  Int
+  typePrefix String?
+  value      String
+  Document   Document[]
+}
+
+model NumberRange {
+  id           Int            @id @default(autoincrement())
+  description  String?
+  min          Int
+  max          Int
+  numberSchema NumberSchema[]
+  company      Company        @relation(fields: [companyId], references: [id])
+  companyId    Int
+}
+
+model NumberSchema {
+  id          Int           @id @default(autoincrement())
+  description String
+  ranges      NumberRange[]
+  projects    Project[]
+}
+
+model StatusStage {
+  id          Int          @id @default(autoincrement())
+  description String
+  revPrefix   String
+  StatusCodes StatusCode[]
+}
+
+model StatusCode {
+  id            Int         @id @default(autoincrement())
+  shortCode     String
+  description   String
+  statusStage   StatusStage @relation(fields: [statusStageId], references: [id])
+  statusStageId Int
+}
+
+model Document {
+  id          String  @id @unique
+  description String?
+
+  project       String
+  projectCode   String
+  originator    String
+  companyCode   String
+  volume        String
+  level         String
+  type          String
+  role          String
+  number        Number @relation(fields: [numberId], references: [id])
+  numberId      Int
+  status        String
+  revisionMajor Int
+  revisionMinor Int?
+}

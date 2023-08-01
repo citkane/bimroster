@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>BIMRoster</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<script src="index.js" type="module"></script>
+	</head>
+	<body></body>
+	<template id="appChrome">
+		<div id="App">
+			<chrome-top>top</chrome-top>
+			<div>
+				<chrome-left>left</chrome-left>
+				<chrome-content></chrome-content>
+				<chrome-right>right</chrome-right>
+			</div>
+			<chrome-footer>footer</chrome-footer>
+		</div>
+	</template>
+
+	<template id="NumberBuilderFieldSelectors">
+		<field-selector type="project"></field-selector>
+		<field-selector type="originator"></field-selector>
+		<field-selector type="volume"></field-selector>
+		<field-selector type="level"></field-selector>
+		<field-selector type="type"></field-selector>
+		<field-selector type="role"></field-selector>
+		<number-field-selector></number-field-selector>
+		<field-selector type="status"></field-selector>
+		<field-selector type="revision"></field-selector>
+	</template>
+	<template id="NumberFieldDisplays">
+		<field-display type="project"></field-display>
+		<field-display type="originator"></field-display>
+		<field-display type="volume"></field-display>
+		<field-display type="level"></field-display>
+		<field-display type="type"></field-display>
+		<field-display type="role"></field-display>
+		<field-display type="number"></field-display>
+		<field-display type="status"></field-display>
+		<field-display type="revision"></field-display>
+	</template>
+</html>

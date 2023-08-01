@@ -1,0 +1,12 @@
+{
+	"extends": "../.tsconfig/commonJs.json",
+	"include": [
+		"./server","./api/*.json", "./types.d.ts"
+	],
+	"compilerOptions": {
+		"outDir": "../dist",
+        "composite": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true
+	}
+}
